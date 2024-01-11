@@ -19,9 +19,10 @@ class PostController extends Controller
             'description' => 'required',
             'image' => 'required'
         ]);
-
+        
         if ($validator->fails()) {
-            return back()->withError($validator->errors());
+            // dd($request->all());
+            return redirect()->back()->withinput()->withErrors($validator->errors());
         }
 
         $formFields = [
@@ -44,7 +45,7 @@ class PostController extends Controller
         if($post){
             return redirect('/')->with("success", "Post Created Successfully");
         }else{
-            return back()->with("error", "Something went wrong");
+            return redirect()->back()->with("error", "Something went wrong");
         }
     }
 
@@ -53,9 +54,13 @@ class PostController extends Controller
     public function allPosts(){
         $posts = Post::all();
         if($posts){
-            return view('posts.all-posts', [
+            return view('post.all-posts', [
                 'posts' => $posts
             ]);
         }
     }
+
+    // public function allPosts(){
+    //     return view('post.all-posts');
+    // }
 }

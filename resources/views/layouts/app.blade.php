@@ -26,6 +26,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/create">Create Post</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/allposts">All Posts</a>
+                    </li>
             </div>
         </div>
     </nav>

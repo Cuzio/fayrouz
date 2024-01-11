@@ -9,31 +9,33 @@
     <div>
         <div class="mb-3">
             <label for="title" class="form-label">Post Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Enter Post Title">
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
+                placeholder="Enter Post Title">
+            @error('title')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$message}}</strong>
+            </span>
+            @enderror
         </div>
-        @error('title')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{$message}}</strong>
-        </span>
-        @enderror
         <div class="mb-3">
             <label for="description" class="form-label">Post Description</label>
-            <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="3"
+                name="description"></textarea>
+            @error('description')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$message}}</strong>
+            </span>
+            @enderror
         </div>
-        @error('description')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{$message}}</strong>
-        </span>
-        @enderror
         <label for="image" class="form-label">Post Image</label>
         <div class="input-group mb-3">
-            <input type="file" class="form-control" name="image" id="image">
+            <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image">
+            @error('image')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$message}}</strong>
+            </span>
+            @enderror
         </div>
-        @error('image')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{$message}}</strong>
-        </span>
-        @enderror
         <input type="submit" value="Post" class="form-control bg-danger text-light">
     </div>
 </form>

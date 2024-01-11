@@ -24,3 +24,5 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/create', [PostController::class, 'create']);
 
 Route::post('/create-post', [PostController::class, 'createPost']);
+
+Route::get('/allposts', [PostController::class, 'allPosts']);
