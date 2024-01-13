@@ -21,8 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/create', [PostController::class, 'create']);
+Route::get('/create', [PostController::class, 'create'])->name("create");
 
-Route::post('/create-post', [PostController::class, 'createPost']);
+Route::post('/create-post', [PostController::class, 'createPost'])->name("create.post");
 
-Route::get('/allposts', [PostController::class, 'allPosts']);
+Route::get('/allposts', [PostController::class, 'allPosts'])->name("all.posts");
+
+Route::get('/singlepost/{post_id}', [PostController::class, 'singlePost'])->name("single.post");
+
+Route::get('/edit-post/{post_id}', [PostController::class, 'editPost'])->name("edit.post");

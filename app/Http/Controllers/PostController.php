@@ -53,6 +53,7 @@ class PostController extends Controller
 
     public function allPosts(){
         $posts = Post::all();
+        // all was used to get all the posts in the database. get(), paginate() could also be used to get all the posts. ie to get the array.
         if($posts){
             return view('post.all-posts', [
                 'posts' => $posts
@@ -60,7 +61,13 @@ class PostController extends Controller
         }
     }
 
-    // public function allPosts(){
-    //     return view('post.all-posts');
-    // }
+   public function singlePost($id){
+        $singlePost = Post::find($id);
+        // find was used because you are to display the data from the database singlarly. first() could be used to get a single data from the database. {$singlePost = Post::where('id', $id)->first();}
+        if($singlePost){
+            return view('post.single-post', [
+                'singlePost' => $singlePost,
+            ]);
+        }
+   }
 }

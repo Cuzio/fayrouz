@@ -1,0 +1,8 @@
+.all-posts-container {
+    box-shadow: 5px 5px 5px #000;
+}
+
+.image {
+    width: 40vw;
+    height: 200px;
+}
