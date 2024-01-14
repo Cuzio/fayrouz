@@ -70,4 +70,15 @@ class PostController extends Controller
             ]);
         }
    }
+
+   public function editPost($id){
+    $post = Post::find($id);
+    return view('post.edit', [
+        'post' => $post,
+    ]);
+   }
+
+   public function updatePost($id){
+    
+   }
 }

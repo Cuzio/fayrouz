@@ -30,3 +30,5 @@ Route::get('/allposts', [PostController::class, 'allPosts'])->name("all.posts");
 Route::get('/singlepost/{post_id}', [PostController::class, 'singlePost'])->name("single.post");
 
 Route::get('/edit-post/{post_id}', [PostController::class, 'editPost'])->name("edit.post");
+
+Route::post('/update-post/{post_id}', [PostController::class, 'updatePost'])->name("update.post");
