@@ -78,7 +78,41 @@ class PostController extends Controller
     ]);
    }
 
-   public function updatePost($id){
+   public function updatePost(Request $request, $id){
+    $validator = Validator::make($request->all(), [
+        'title' => 'required',
+        'description' => 'required',
+        // 'image' => 'required'
+    ]);
     
+    if ($validator->fails()) {
+        // dd($request->all());
+        return redirect()->back()->withinput()->withErrors($validator->errors());
+    }
+
+    $formFields = [
+        'title' => $request->title,
+        'description' => $request->description,
+        // 'image' => $request->image
+    ];
+
+    // sdhgfygfgf-post-image.jpg (how the image will be saved)
+
+    if($request->image){
+        $image = uniqid().'-'.'post-image'.'.'.$request->image->extension();
+        
+        // to save the image posted in the database in the project and be saved in posts file that will be created in the public directory
+        
+        $request->image->move(public_path('posts'), $image);
+        $formFields['image'] = $image;
+    }
+
+    $update = Post::where('id', $id)->update($formFields);
+
+    if($update){
+        return redirect('/')->with("success", "Post Updated Successfully");
+    }else{
+        return redirect()->back()->with("error", "Something went wrong");
+    }
    }
 }
