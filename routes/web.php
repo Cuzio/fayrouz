@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,3 +33,9 @@ Route::get('/singlepost/{post_id}', [PostController::class, 'singlePost'])->name
 Route::get('/edit-post/{post_id}', [PostController::class, 'editPost'])->name("edit.post");
 
 Route::post('/update-post/{post_id}', [PostController::class, 'updatePost'])->name("update.post");
+
+Route::delete('/delete-post/{post_id}', [PostController::class, 'deletePost'])->name("delete.post");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
