@@ -2,7 +2,21 @@
 @section('title', 'All Posts')
 
 @section('content')
-<h1>All Posts</h1>
+
+@if (session()->has('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{session()->get('error')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+@if (session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{session()->get('success')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+<h1 class="text-center">All Posts</h1>
 
 @foreach ($posts as $post)
 <a href="{{ route('single.post', $post->id) }}" class="text-dark text-decoration-none">

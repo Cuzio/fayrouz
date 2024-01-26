@@ -2,6 +2,20 @@
 @section('title', 'Create Post')
 
 @section('content')
+
+@if (session()->has('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{session()->get('error')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+@if (session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{session()->get('success')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 <form method="post" action="/create-post" class="w-50 mx-auto text-center mt-5" enctype="multipart/form-data">
     <!-- cross side requst forgery (helps to stop hackers) -->
     @csrf

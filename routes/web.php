@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,16 @@ Route::post('/update-post/{post_id}', [PostController::class, 'updatePost'])->na
 
 Route::delete('/delete-post/{post_id}', [PostController::class, 'deletePost'])->name("delete.post");
 
-Auth::routes();
+
+Route::get('/login', [AuthController::class, 'login'])->name("login");
+
+Route::get('/register', [AuthController::class, 'register'])->name("register");
+
+Route::post('/register-user', [AuthController::class, 'registerUser'])->name("register.user");
+
+Route::post('/login-user', [AuthController::class, 'loginUser'])->name("login.user");
+
+
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
