@@ -34,11 +34,11 @@ class AuthController extends Controller
         }
 
         $formFields = [
-            'firs_name' => $request->input('first_name'),
+            'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'phone' => $request->input('phone'),
             'gender' => $request->input('gender'),
-            'email' => $request->input('email'),
+            'email' => strtolower($request->input('email')),
             'password' => bcrypt($request->input('password')),
         ];
 
@@ -51,4 +51,36 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'An error has occurred, Registration was not successful');
         }
     }
+
+    public function loginUser(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+
+        $user =User::where('email', strtolower($request->input('email')))->first();
+
+        // Check if user exists and password matches
+        if(!$user || !Hash::check($request->input('password'), $user->password)){
+            return redirect()->back()->withInput()->with("error", "Invalid credentials");
+        }
+
+        (auth()->login($user));
+
+        return redirect('/')->with('success', 'Login Successfully');
+        
+    }
+
+    public function logout(Request $request){
+        auth()->logout();
+        // Auth::logout(); (above is the same as this line).
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/allposts')->with('success', 'See you sonn!!!');
+    }
+
 }

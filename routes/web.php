@@ -46,6 +46,10 @@ Route::post('/register-user', [AuthController::class, 'registerUser'])->name("re
 
 Route::post('/login-user', [AuthController::class, 'loginUser'])->name("login.user");
 
+Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
+
+Route::post('/logout-user', [AuthController::class, 'logoutUser'])->name("logout.user");
+
 
 // Auth::routes();
 
