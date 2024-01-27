@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,11 @@ Route::post('/login-user', [AuthController::class, 'loginUser'])->name("login.us
 
 Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
 
-Route::post('/logout-user', [AuthController::class, 'logoutUser'])->name("logout.user");
+// Route::post('/logout-user', [AuthController::class, 'logoutUser'])->name("logout.user");
+
+Route::post('/comment/{post_id}', [CommentController::class, 'comment'])->name("comment");
+
+// Route::post('/all-comments', [CommentController::class, 'allComments'])->name("all.comments");
 
 
 // Auth::routes();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Post;
@@ -19,22 +20,23 @@ class PostController extends Controller
             'description' => 'required',
             'image' => 'required'
         ]);
-        
+
         if ($validator->fails()) {
             // dd($request->all());
             return redirect()->back()->withinput()->withErrors($validator->errors());
         }
 
         $formFields = [
+            'user_id' => auth()->id(),
             'title' => $request->title,
             'description' => $request->description,
             // 'image' => $request->image
         ];
 
         // sdhgfygfgf-post-image.jpg (how the image will be saved)
-        
+
         $image = uniqid().'-'.'post-image'.'.'.$request->image->extension();
-        
+
         // to save the image posted in the database in the project and be saved in posts file that will be created in the public directory
 
         $request->image->move(public_path('posts'), $image);
@@ -43,7 +45,7 @@ class PostController extends Controller
         $post = Post::create($formFields);
 
         if($post){
-            return redirect('/')->with("success", "Post Created Successfully");
+            return redirect('/allposts')->with("success", "Post Created Successfully");
         }else{
             return redirect()->back()->with("error", "Something went wrong");
         }
@@ -64,9 +66,14 @@ class PostController extends Controller
    public function singlePost($id){
         $singlePost = Post::find($id);
         // find was used because you are to display the data from the database singlarly. first() could be used to get a single data from the database. {$singlePost = Post::where('id', $id)->first();}
+
+        $comments = Comment::all();
+
+
         if($singlePost){
             return view('post.single-post', [
                 'singlePost' => $singlePost,
+                'comments' => $comments
             ]);
         }
    }
@@ -84,7 +91,7 @@ class PostController extends Controller
         'description' => 'required',
         // 'image' => 'required'
     ]);
-    
+
     if ($validator->fails()) {
         // dd($request->all());
         return redirect()->back()->withinput()->withErrors($validator->errors());
@@ -100,9 +107,9 @@ class PostController extends Controller
 
     if($request->image){
         $image = uniqid().'-'.'post-image'.'.'.$request->image->extension();
-        
+
         // to save the image posted in the database in the project and be saved in posts file that will be created in the public directory
-        
+
         $request->image->move(public_path('posts'), $image);
         $formFields['image'] = $image;
     }
@@ -124,4 +131,6 @@ class PostController extends Controller
         return redirect()->back()->with("error", "Something went wrong");
     }
    }
+
+
 }

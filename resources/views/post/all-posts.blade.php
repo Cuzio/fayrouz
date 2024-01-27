@@ -18,13 +18,18 @@
 
 <h1 class="text-center">All Posts</h1>
 
-@foreach ($posts as $post)
+{{-- forelse is just like foreach, saying that if there is this, do this. else do this --}}
+@forelse ($posts as $post)
 <a href="{{ route('single.post', $post->id) }}" class="text-dark text-decoration-none">
     <div class="w-50 mx-auto my-5 all-posts-container p-3">
         <img src="{{ asset('posts/'.$post->image) }}" alt="" class="image">
         <h3>Title: {{ $post->title }}</h3>
     </div>
 </a>
-@endforeach
+
+{{-- @empty stands as the else statment here. --}}
+@empty
+<div class="text-center text-danger">No Posts yet...</div>
+@endforelse
 
 @endsection
