@@ -23,6 +23,7 @@
     <h3>Title: {{ $singlePost->title }}</h3>
     <h3>Description: {{ $singlePost->description }}</h3>
     {{-- for the edit and delete buttons to be shown to only the user that created it and is logged in, use the next line --}}
+    <div class="d-flex">
     @if (auth()->check() && $singlePost->user_id == auth()->id())
     <div class="d-flex">
         <div class="me-3">
@@ -35,11 +36,14 @@
         </form>
     </div>
     @endif
+    <i class="fa-regular fa-comment" onclick="showForm()"></i>
+</div>
 </div>
 
     {{-- for the comment to be added and seen by only users that are logged in, use the next line --}}
     @if (auth()->check())
     <div class="my-3 text-center">
+        <div class="comment-form" id="commentForm">
         <h4>Comment</h4>
 
         <form action="{{ route('comment', $singlePost->id) }}" method="post" class="w-50 mx-auto">
@@ -56,6 +60,7 @@
 
             <input type="submit" value="comment" class="form-control bg-danger text-light">
         </form>
+    </div>
 
         <div class="mt-3">
             <h4 style="font-style: italic">Comments</h4>
@@ -72,6 +77,10 @@
 const check = () => {
     const check = confirm('Are you sure you want to delete this post?');
     return check;
+}
+
+function showForm() {
+   document.getElementById('commentForm').style.display = "block";
 }
 </script>
 

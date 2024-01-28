@@ -6,3 +6,11 @@
     width: 40vw;
     height: 200px;
 }
+.fa-comment {
+    margin: 0rem 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+#commentForm {
+    display: none;
+}
