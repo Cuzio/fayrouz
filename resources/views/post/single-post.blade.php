@@ -65,9 +65,12 @@
         <div class="mt-3">
             <h4 style="font-style: italic">Comments</h4>
             @foreach ($comments as $comment )
-                <div>
-                    {{ $comment->comment }}
-                </div>
+            {{-- to asign a comment to it's post --}}
+            @if ($singlePost->id === $comment->post_id)
+            <div>
+                {{ $comment->comment }}
+            </div>
+            @endif
             @endforeach
         </div>
         @endif

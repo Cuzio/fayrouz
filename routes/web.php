@@ -59,3 +59,9 @@ Route::post('/comment/{post_id}', [CommentController::class, 'comment'])->name("
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/forget-password-email', [AuthController::class, 'forgetPasswordEmail'])->name('forget.password.email');
+
+Route::post('/password-email', [AuthController::class, 'passwordEmail'])->name('password.email');
+
+Route::post('/password-reset', [AuthController::class, 'passwordReset'])->name('password.reset');

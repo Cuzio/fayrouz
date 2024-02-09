@@ -18,7 +18,6 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required'
         ]);
 
         if ($validator->fails()) {

@@ -15,4 +15,14 @@ class Post extends Model
         "description",
         "image"
     ];
+
+    // to asign each post to the right comments and user.
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

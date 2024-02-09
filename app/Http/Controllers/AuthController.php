@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -72,7 +73,7 @@ class AuthController extends Controller
         (auth()->login($user));
 
         return redirect('/')->with('success', 'Login Successfully');
-        
+
     }
 
     public function logout(Request $request){
@@ -81,6 +82,36 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/allposts')->with('success', 'See you sonn!!!');
+    }
+
+    public function forgetPasswordEmail(){
+        return view('auth.passwords.email');
+    }
+
+    public function passwordEmail(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if(!$user){
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        $responses = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if($responses == Password::RESET_LINK_SENT){
+            return redirect('/')->with('success', 'Reset password link has been sent to your email');
+        }else{
+            return redirect()->back()->with('error', 'Unable to send reset link');
+        }
     }
 
 }
