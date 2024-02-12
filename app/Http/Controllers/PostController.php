@@ -53,8 +53,20 @@ class PostController extends Controller
     // to get all the posts
 
     public function allPosts(){
-        $posts = Post::all();
         // all was used to get all the posts in the database. get(), paginate() could also be used to get all the posts. ie to get the array.
+        // ways to get all the posts made.
+        // $posts = Post::get();
+        // $post = Post::orderBy('created_at', 'asc')->get();
+        // $post = Post::orderBy('created_at', 'desc')->get();
+        // $post = Post::inRandomOrder()->get();
+
+        // With the {limit(1) it is telling you how many posts to return}
+        // $post = Post::orderBy('created_at', 'desc')->limit(1)->get();
+        // $post = Post::inRandomOrder()->limit(1)->get();
+        // $post = Post::inRandomOrder()->paginate(1);
+
+        // $posts = Post::all();
+        $posts = Post::with('user', 'comments')->orderBy('created_at', 'desc')->limit(3)->get();
         if($posts){
             return view('post.all-posts', [
                 'posts' => $posts

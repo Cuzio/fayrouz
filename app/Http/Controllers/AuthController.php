@@ -114,4 +114,37 @@ class AuthController extends Controller
         }
     }
 
+    public function passwordReset(Request $request){
+        return view('auth.passwords.reset', [
+            'token' => $request->token
+        ]);
+    }
+
+    public function passwordUpdate(Request $request){
+        $validator = Validator::make ($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|comfirmed|min:8',
+            'token' => 'required|string'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password){
+                $user->password = bcrypt($password);
+                $user->save();
+            }
+        );
+
+        if($status === Password::PASSWORD_RESET){
+            return view('auth.login')->with('success', "Password reset successfully");
+        }else{
+            return redirect()->back()->with('error', "Password reset failed");
+        }
+    }
+
+
 }

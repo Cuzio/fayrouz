@@ -64,4 +64,6 @@ Route::get('/forget-password-email', [AuthController::class, 'forgetPasswordEmai
 
 Route::post('/password-email', [AuthController::class, 'passwordEmail'])->name('password.email');
 
-Route::post('/password-reset', [AuthController::class, 'passwordReset'])->name('password.reset');
+Route::get('/password-reset', [AuthController::class, 'passwordReset'])->name('password.reset');
+
+Route::post('/password-update', [AuthController::class, 'passwordUpdate'])->name('password.update');
